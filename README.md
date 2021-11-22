@@ -74,7 +74,7 @@ If you happen to use the code for your research, please cite the following paper
 
 ```
 @inproceedings{Martinez_ICCV_2021,
-	author = "Mart\'inez-Gonz\'alez, A. and Villamizar, M. and Odobez, J.M.",
+author = "Mart\'inez-Gonz\'alez, A. and Villamizar, M. and Odobez, J.M.",
 title = {Pose Transformers (POTR): Human Motion Prediction with Non-Autoregressive Transformers},
 booktitle = {IEEE/CVF International Conference on Computer Vision - Workshops (ICCV)},
 year = {2021}
