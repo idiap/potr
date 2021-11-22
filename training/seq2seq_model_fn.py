@@ -47,12 +47,12 @@ import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 import torch.nn.functional as F
 
-sys.path.append('../')
-
+thispath = os.path.dirname(os.path.abspath(__file__))                            
+sys.path.insert(0, thispath+"/../")
 
 import utils.utils as utils
 import utils.WarmUpScheduler as warm_up_scheduler
-import data.H36MDataset as h36mdataset_fn
+import data.H36MDataset_v2 as h36mdataset_fn
 import visualize.viz as viz
 import models.seq2seq_model as seq2seq_model
 

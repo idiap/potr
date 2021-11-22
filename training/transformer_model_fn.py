@@ -43,12 +43,9 @@ sys.path.insert(0, thispath+"/../")
 import training.seq2seq_model_fn as seq2seq_model_fn
 import models.PoseTransformer as PoseTransformer
 import models.PoseEncoderDecoder as PoseEncoderDecoder
-import data.H36MDataset as H36MDataset
 import data.H36MDataset_v2 as H36MDataset_v2
-import data.AMASSDataset as AMASSDataset
 import data.NTURGDDataset as NTURGDDataset
 import utils.utils as utils
-import radam.radam as radam
 
 _DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 _WEIGHT_DECAY = 0.00001

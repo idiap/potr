@@ -35,8 +35,6 @@ thispath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, thispath+"/../")
 
 import utils.utils as utils
-import models.VAE as VAE
-import models.PoseActionClassifier as PoseActionClassifier
 import models.PoseGCN as GCN
 import models.Conv1DEncoder as Conv1DEncoder
 
@@ -52,27 +50,6 @@ def pose_encoder_mlp(params):
   )
   utils.weight_init(pose_embedding, init_fn_=init_fn)
   return pose_embedding
-
-
-def pose_encoder_vae(params):
-  init_fn = utils.normal_init_ \
-      if params['init_fn'] == 'normal_init' else utils.xavier_init_
-  vae = VAE.VAE(pose_dim=params['input_dim'],  
-      hidden_dim=params['model_dim'],
-      common_size=256,
-      init_fn=init_fn
-  )
-  if params['encoder_ckpt'] is not None:
-    print('[INFO] (pose_encoder_vae) Loading encoder VAE')
-    vae.load_state_dict(
-        torch.load(params['encoder_ckpt'], map_location=torch.device('cpu')))
-    for p in vae.parameters():
-      if p.requires_grad:
-        p.requires_grad = False
-    vae.eval()
-  vae._encode_only = True
-
-  return vae
       
 
 def pose_decoder_mlp(params):
@@ -81,30 +58,6 @@ def pose_decoder_mlp(params):
   pose_decoder = nn.Linear(params['model_dim'], params['pose_dim'])
   utils.weight_init(pose_decoder, init_fn_=init_fn)
   return pose_decoder
-
-
-def pose_encoder_conv1d_classifier(params):
-  dim = params['model_dim']
-  encoder = PoseActionClassifier.ActionClassifier(dim=dim, n_classes=15)
-
-  if params['encoder_ckpt'] is not None:
-    print('[INFO] (pose_encoder_conv1d_classifier) Loading encoder!')
-    encoder.load_state_dict(
-        torch.load(params['encoder_ckpt'], map_location=torch.device('cpu')))
-    # freeze parameters
-
-  class EncodeFn(nn.Module):
-    def __init__(self):
-      super(EncodeFn, self).__init__()
-      self._encoder = encoder._pose_encoder
-
-    def forward(self, x):
-      B, S, D = x.size()
-      x = x.view(-1, 1, D)
-      x = self._encoder(x)
-      x = x.view(-1, S, dim)
-      return x
-  return EncodeFn()
 
 
 def pose_decoder_gcn(params):
@@ -165,7 +118,5 @@ def select_pose_encoder_decoder_fn(params):
     return pose_encoder_gcn, pose_decoder_gcn
   elif params['pose_embedding_type'].lower() == 'vae':
     return pose_encoder_vae, pose_decoder_mlp
-  elif params['pose_embedding_type'].lower() == 'conv1d_class':
-    return pose_encoder_conv1d_classifier, pose_decoder_mlp
   else:
     raise ValueError('Unknown pose embedding {}'.format(params['pose_embedding_type']))

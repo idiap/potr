@@ -1,9 +1,13 @@
 # Pose Transformers: Human Motion Prediction with Non-Autoregressive Transformers
 
-![alt text](imgs_docs/potr_walking.gif)
+
+![alt text](imgs_docs/potr-eps-converted-to.png)
+
 
 This is the repo used for human motion prediction with non-autoregressive
-transformers published with our paper ![alt text]()
+transformers published with our [paper](https://openaccess.thecvf.com/content/ICCV2021W/SoMoF/papers/Martinez-Gonzalez_Pose_Transformers_POTR_Human_Motion_Prediction_With_Non-Autoregressive_Transformers_ICCVW_2021_paper.pdf)
+
+![alt text](imgs_docs/potr_walking.gif)
 
 ## Requirements
 
@@ -16,13 +20,16 @@ transformers published with our paper ![alt text]()
 We have performed experiments with 2 different datasets
 
 1. **H36M**
-2. **NTURGB+D**
+2. [**NTURGB+D**](https://rose1.ntu.edu.sg/dataset/actionRecognition/) (60 actions)
 
 Follow the instructions to download each dataset and place it in ```data```.
 
+**Note**. You can download the H36M dataset using ```wget http://www.cs.stanford.edu/people/ashesh/h3.6m.zip```.
+However, the code expects files to be **npy** files instead of **txt**.
+
 ## Training
 
-To run training with H3.6M dataset and save in ```POTR_OUT`` folder
+To run training with H3.6M dataset and save experiment results in ```POTR_OUT`` folder
 run the following:
 
 
@@ -60,5 +67,18 @@ to be used for encoding and decoding skeletons (\phi and \psi in our paper).
 See ```models/PoseEncoderDecoder.py``` for the types of architectures.
 Tensorboard curves and pytorch models will be saved in ```${POTR_OUT}```.
 
+
+# Citation
+
+If you happen to use the code for your research, please cite the following paper
+
+```
+@inproceedings{Martinez_ICCV_2021,
+	author = "Mart\'inez-Gonz\'alez, A. and Villamizar, M. and Odobez, J.M.",
+title = {Pose Transformers (POTR): Human Motion Prediction with Non-Autoregressive Transformers},
+booktitle = {IEEE/CVF International Conference on Computer Vision - Workshops (ICCV)},
+year = {2021}
+}
+```
 
 
