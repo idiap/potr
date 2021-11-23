@@ -53,15 +53,3 @@ if __name__ == '__main__':
       out_file = os.path.join(out_path, in_file+'.npy')
       print('[ANMG/D] Saving to:', out_file)
       np.save(out_file, txt_mat)
-
-
-
-
-
-
-
-
-
-
-
-

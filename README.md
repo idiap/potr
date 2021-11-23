@@ -26,15 +26,16 @@ Follow the instructions to download each dataset and place it in ```data```.
 
 **Note**. You can download the H36M dataset using ```wget http://www.cs.stanford.edu/people/ashesh/h3.6m.zip```.
 However, the code expects files to be **npy** files instead of **txt**.
+You can use the script in ```data/h36_convert_txt_to_numpy.py``` to convert to ***npy*** files.
 
 ## Training
 
-To run training with H3.6M dataset and save experiment results in ```POTR_OUT`` folder
+To run training with H3.6M dataset and save experiment results in ```POTR_OUT``` folder
 run the following:
 
 
 ```
-python src/training/transformer_model_fn.py \
+python training/transformer_model_fn.py \
   --model_prefix=${POTR_OUT} \
   --batch_size=16 \
   --data_path=${H36M} \
@@ -59,7 +60,8 @@ python src/training/transformer_model_fn.py \
   --non_autoregressive \
   --pos_enc_alpha=10 \
   --pos_enc_beta=500 \
-  --predict_activity 
+  --predict_activity \
+  --action=all
 ```
 
 Where ```pose_embedding_type``` controls the type of architectures of networks 
